@@ -44,6 +44,7 @@
 
 // Data Byte Length
 #define LEN_X_TORQUE_ENABLE             1
+#define LEN_X_GOAL_CURRENT              2
 #define LEN_X_GOAL_VELOCITY             4
 #define LEN_X_GOAL_POSITION             4
 #define LEN_X_REALTIME_TICK             2
@@ -55,27 +56,22 @@
 #define DXL_LEFT_ID                     1       // ID of left motor
 #define DXL_RIGHT_ID                    2       // ID of right motor
 
-#define BAUDRATE                        1000000 // baurd rate of Dynamixel
+#define BAUDRATE                        57600 // baurd rate of Dynamixel
 #define DEVICENAME                      ""      // no need setting on OpenCR
 
 #define TORQUE_ENABLE                   1       // Value for enabling the torque
 #define TORQUE_DISABLE                  0       // Value for disabling the torque
 
-#define LEFT                            0
-#define RIGHT                           1
-
-#define VELOCITY_CONSTANT_VALUE         41.69988758  // V = r * w = r     *        (RPM             * 0.10472)
-                                                     //           = r     * (0.229 * Goal_Velocity) * 0.10472
-                                                     //
-                                                     // Goal_Velocity = V / r * 41.69988757710309
+#define TORQUE_CONTANT_VALUE_SMALL      3.5 //mNm per current unit on 12V
+#define TORQUE_CONTANT_VALUE_BIG        4.5 //mNm per current unit on 12V
 
 #define DEBUG_SERIAL  SerialBT2
 
-class Turtlebot3MotorDriver
+class QuadnakeMotorDriver
 {
  public:
-  Turtlebot3MotorDriver();
-  ~Turtlebot3MotorDriver();
+  QuadnakeMotorDriver();
+  ~QuadnakeMotorDriver();
   bool init(String turtlebot3);
   void close(void);
   bool setTorque(bool onoff);
@@ -100,4 +96,4 @@ class Turtlebot3MotorDriver
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
 };
 
-#endif // TURTLEBOT3_MOTOR_DRIVER_H_
+#endif
