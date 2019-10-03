@@ -72,7 +72,7 @@ class QuadnakeMotorDriver
  public:
   QuadnakeMotorDriver();
   ~QuadnakeMotorDriver();
-  bool init(String turtlebot3);
+  bool init();
   void close(void);
   bool setTorque(bool onoff);
   bool getTorque();
