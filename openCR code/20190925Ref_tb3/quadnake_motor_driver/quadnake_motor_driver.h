@@ -76,9 +76,12 @@ class QuadnakeMotorDriver
   void close(void);
   bool setTorque(bool onoff);
   bool getTorque();
-  bool readEncoder(int32_t &left_value, int32_t &right_value);
-  bool writeVelocity(int64_t left_value, int64_t right_value);
-  bool controlMotor(const float wheel_radius, const float wheel_separation, float* value);
+  // bool readEncoder(int8_t id, int32_t &angle_value);
+  // bool writeVelocity(int8_t id, int64_t velocity);
+  // bool controlMotor(const float wheel_radius, const float wheel_separation, float* value);
+
+  bool writePosition(uint8_t id, int64_t position);
+  bool readPosition(uint8_t id, int32_t &position);
 
  private:
   uint32_t baudrate_;
