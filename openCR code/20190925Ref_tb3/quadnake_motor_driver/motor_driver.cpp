@@ -8,11 +8,6 @@ motorDriver::motorDriver()
 {
 	bool initError = false; //True is no error
 
-	motorids[0] = { 1,2,3,4,5,6,7,8 };
-	motorids[1] = { 11,12,13,14,15,16,17,18 };
-	motorids[2] = { 21,22,23,24,25,26,27,28 };
-	motorids[3] = { 31,32,33,34,35,36,37,38 };
-
 	initError = init();
 
 	if(!initError)
@@ -49,10 +44,23 @@ bool motorDriver::init()
 bool motorDriver::setTorque(uint8_t id, bool onoff)
 {
 	uint8_t dxl_error;
-	pah_->write1ByteTxRx(poh_,id,ADDR_X_TORQUE_ENABLE,onoff,dxl_error);
+	pah_->write1ByteTxRx(poh_,id,ADDR_X_TORQUE_ENABLE,onoff,&dxl_error);
 	if(dxl_error != COMM_SUCCESS)
 	{
 		DEBUG_SERIAL.println("Failed to write command during running [setTorque] function.");
+		return false;
+	}
+	return true;
+}
+
+bool motorDriver::movetoPosition(uint8_t id, int32_t position)
+{
+	uint8_t dxl_error;
+	pah_->write4ByteTxRx(poh_,id,ADDR_X_GOAL_POSITION,position,&dxl_error);
+
+	if(dxl_error != COMM_SUCCESS)
+	{
+		DEBUG_SERIAL.println("failed to write command during running [movetoPosition] function.");
 		return false;
 	}
 	return true;
@@ -69,6 +77,6 @@ void motorDriver::limitVelocity(uint8_t id, uint32_t vel)
 
 	if(id != 0xFE)
 	{
-		pah_->write4ByteTxRx(poh_,id,ADDR_X_LIMIT_VELOCITY,vel,dxl_error);
+		pah_->write4ByteTxRx(poh_,id,ADDR_X_LIMIT_VELOCITY,vel,&dxl_error);
 	}
 }

@@ -61,6 +61,7 @@ class motorDriver
     bool init(); //모터 초기속도, 동작범위, 통신 초기화등 초기 설정
  
     bool setTorque(uint8_t id, bool onoff);
+    bool movetoPosition(uint8_t id, int32_t position);
     //bool setMaxTorque(uint8_t id, bool onoff);
     //bool setVel(uint8_t id, bool onoff);
     
@@ -70,7 +71,6 @@ class motorDriver
 
     uint32_t baudrate_;
     float protocol_ver_;
-    uint8_t motorids[4][8];
 
     dynamixel::PortHandler *poh_;
     dynamixel::PacketHandler *pah_;
