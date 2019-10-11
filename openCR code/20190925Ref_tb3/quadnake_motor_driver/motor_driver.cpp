@@ -28,6 +28,17 @@ bool motorDriver::init()
 	poh_ = dynamixel::PortHandler::getPortHandler(DEVICENAME);
 	pah_ = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
 
+	if(poh_->openPort()== false)
+	{
+		DEBUG_SERIAL.println("Failed to open port for port handler during running init function.");
+		return false;
+	}
+
+	if(poh_->setBaudRate(baudrate_) == false)
+	{
+		DEBUG_SERIAL.println("Failed to set baudrate for port handler during running init function.");
+		return false;
+	}
 	bool initError = false;
 	//before torque on
 	//set velocity limit and angle limit and so on.
